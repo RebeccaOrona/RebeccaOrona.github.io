@@ -1,0 +1,12 @@
+[{"id": 1, "tipo": "Medio", "presentacion": "Molido","img": "img/bolsa_molido_brasil.png", "precio": 3030, "categoria": "Molido", "detalles": "Cafe molido Brasil"},
+{"id": 2, "tipo": "Intenso", "presentacion": "Molido","img": "img/bolsa_molido_italiano.png", "precio": 3250, "categoria": "Molido", "detalles": "Cafe molido tipo italiano"},
+{"id": 3, "tipo": "Suave", "presentacion": "Molido","img": "img/bolsa_molido_colombia.png", "precio": 2785, "categoria": "Molido", "detalles": "Cafe molido Colombia"},
+{"id": 4, "tipo": "Intenso", "presentacion": "Capsulas","img": "img/capsulas_molido_italiano.png", "precio": 1700, "categoria": "Capsulas compatibles con NESPRESSO", "detalles": "Cafe en capsulas tipo italiano"},
+{"id": 5, "tipo": "Medio", "presentacion": "Capsulas","img": "img/capsulas_molido_brasil.png", "precio": 1670, "categoria": "Capsulas compatibles con NESPRESSO", "detalles": "Cafe en capsulas Brasil"},
+{"id": 6, "tipo": "Suave", "presentacion": "Capsulas","img": "img/capsulas_molido_colombia.png", "precio": 2100, "categoria": "Capsulas compatibles con NESPRESSO", "detalles": "Cafe en capsulas Colombia"},
+{"id": 7, "tipo": "Intenso", "presentacion": "Capsulas","img": "img/combo_fuerte_capsulas_molido.png", "precio": 4800, "categoria": "Capsulas compatibles con NESPRESSO", "detalles": "Combo fuerte en capsulas"},
+{"id": 8, "tipo": "Suave", "presentacion": "Capsulas","img": "img/capsulas_molido_latte_machiatto_dolce.png", "precio": 2000, "categoria": "Capsulas compatibles con DOLCE GUSTO", "detalles": "Cafe en capsulas Vainilla Macchiato"},
+{"id": 9, "tipo": "Medio", "presentacion": "Capsulas","img": "img/capsulas_molido_caramel_machiatto_dolce.png", "precio": 1500, "categoria": "Capsulas compatibles con DOLCE GUSTO", "detalles": "Cafe en capsulas Caramel Macchiato"}
+
+
+]

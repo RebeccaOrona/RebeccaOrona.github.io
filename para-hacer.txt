@@ -1,0 +1,11 @@
+TO DO:
+
+1-Hacer que clickear el blahaj te lleve al inicio en vez de tener otro boton aparte X
+2-Buscar una imagen de fondo de inicio X
+3-Agregar un nombre y marca a cada objeto del array
+
+4-Agregar los detalles de cada objeto X
+5-Arreglar el css de la busqueda filtrada X
+6-Fazer carrito
+7-Arreglar las imagenes de cada producto (sacarles una foto mas chiquita)
+8-Agregar boton para sumar al carrito X

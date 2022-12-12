@@ -419,6 +419,7 @@
 
 #btnAgregar {
   background-color: #aa76a1;
+  position: relative;
   border-radius: 1rem;
   padding: 1rem 1rem;
   width: 100px;
@@ -426,6 +427,9 @@
   
   
 }
-
+.prodAgregados {
+  margin-left: 10px;
+    margin-top: -9999px;
+}
   
   

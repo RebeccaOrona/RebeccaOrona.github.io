@@ -82,7 +82,8 @@ comboIntensidad.addEventListener('change', (evt) => {
 const renderIndex = (tipoIntensidad) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    
+    //Declaro el array donde guardo los productos
+var arrayIntensidad = []
 
     productosJSON.forEach(elemento => {{
         if(elemento.tipo==tipoIntensidad){
@@ -91,13 +92,14 @@ const renderIndex = (tipoIntensidad) => {
           //  contenedorFiltros.style.display = "none";
             contenedorFiltros.style.display = "";
             console.log(contenedor.innerHTML);
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div id="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
@@ -105,24 +107,33 @@ const renderIndex = (tipoIntensidad) => {
             </div>
             </ul>
             </p>
-            </div>
             <br>
            `
-            console.log(elemento)
-            const boton = document.createElement("button");
+
+           const boton = document.createElement("button");
         boton.id='btnAgregar'
-        const cont = document.createTextNode("Agregar al carrito")
-        boton.appendChild(cont)
-        let info = document.querySelector("#info")
-         info.appendChild(boton)
+        boton.innerText="Agregar al carrito"
+        content.append(boton)
+        contenedor.append(content)
             
+        
         
         
         console.log(boton)
            console.log(contenedor.innerHTML)
         }}
-        
 
+    function cargarArray() {
+    productosJSON.forEach(elemento => {
+        if(elemento.tipo===tipoIntensidad){
+            arrayIntensidad.push((productosJSON[elemento]))}
+        
+        console.log(productosJSON)
+        console.log(arrayIntensidad)
+    }
+    )
+    }
+    setTimeout(() => cargarArray(),10000)
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px"; 
         panelFiltros.style.top = "100px";
@@ -143,12 +154,8 @@ const renderIndex = (tipoIntensidad) => {
 
 
 }
-//Declaro el array donde guardo los productos
-var arrayIntensidad = []
-productosJSON.forEach(elemento => {
-    if(elemento.tipo==tipoIntensidad){
-            arrayIntensidad.push(elemento)}
-    })
+
+
 
 // EVENTO CHANGE DEL COMBO DE tipo de OPERACION DE LA PAGINA INDEX
 
@@ -678,27 +685,29 @@ botonCarr.addEventListener("click", () => {
     let contenedorCarrito = document.querySelector("#carritoContainer")
     console.log(contenedorCarrito)
     console.log("Despues del query carritocontainer")
-    
+    let contentCarrito = document.createElement("div")
+    contentCarrito.className = "prodAgregados"
     arrayIntensidad.forEach(elemento => {
-    contenedorCarrito.innerHTML += `
-    <div class="prodAgregados">
+    contentCarrito.innerHTML += `
+    
     <ul>
     <img src= ${elemento.img} class="imgs"/>
     <div class="info">
     
-    <li> ${elemento.tipo}</li>
+    <li>  ${elemento.tipo}</li>
     <li>  ${elemento.detalles}</li>
     <li>  ${elemento.precio}</li>
     </div>
 
     </ul>
     
-    </div>
+    
     
     `
+    localStorage.setItem("Producto",elemento)
     }
     )
-
+    contenedorCarrito.append(contentCarrito)
 }
 )
 }

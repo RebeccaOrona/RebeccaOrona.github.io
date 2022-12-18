@@ -19,6 +19,7 @@
 
 
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="style.css" />
 
 
@@ -29,6 +30,7 @@
 <body>
     <div class="container-fluid">
         <div id=menu_principal class="row">
+            <header>
                 <a href="index.html" class="linkInicio_aIndex">
                     <img class="img_logo_index" src="img/LogoBlahaj.png" alt="logo de la empresa">
                     <h1 class="logo_nombre">
@@ -36,6 +38,7 @@
                     </h1>
 
                 </a>
+            </header>
             <nav class="col-5 col-xxl-6  col-sm-9 menu row ">
                 <ul id="menu_index" class="row col-12">
                     <li class=" col-12 col-sm-2 "> <a href="index.html" class="linkInicio"> INICIO</a></li>
@@ -45,7 +48,29 @@
             </nav>
         </div>
 
+        <h2 class="titulo-principal">Carrito</h2>
         <div id="carritoContainer">
+            <p id="carrito-vacio" class="carrito-vacio">Tu carrito está vacío. <i class="bi bi-emoji-frown"></i></p>
+
+                <div id="carrito-productos" class="carrito-productos disabled">
+                    <!-- Esto se va a completar con el JS -->
+                </div>
+                <div id="carrito-acciones" class="carrito-acciones disabled">
+                    <div class="carrito-acciones-izquierda">
+                        <button id="carrito-acciones-vaciar" class="carrito-acciones-vaciar">Vaciar carrito</button>
+                    </div>
+                    <div class="carrito-acciones-derecha">
+                        <div class="carrito-acciones-total">
+                            <p>Total:</p>
+                            <p id="total">$3000</p>
+                        </div>
+                        <button id="carrito-acciones-comprar" class="carrito-acciones-comprar">Comprar ahora</button>
+                    </div>
+                </div>
+
+                <p id="carrito-comprado" class="carrito-comprado disabled">Muchas gracias por tu compra. <i class="bi bi-emoji-laughing"></i></p>
+
+            
             
         </div>
         
@@ -76,7 +101,7 @@
         </footer>
     </div>
 
-    <!-- <script type="text/javascript" src="main.js"></script> -->
+    <script type="text/javascript" src="carrito.js"></script>
     <script type="text/javascript" src="jquery/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </body>

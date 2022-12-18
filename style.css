@@ -417,7 +417,27 @@
 
 /* CARRITO */
 
-#btnAgregar {
+#btnAgregar3 {
+  background-color: #aa76a1;
+  position: relative;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  width: 100px;
+  margin-top: 15px;
+  
+  
+}
+#btnAgregar6 {
+  background-color: #aa76a1;
+  position: relative;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  width: 100px;
+  margin-top: 15px;
+  
+  
+}
+#btnAgregar8 {
   background-color: #aa76a1;
   position: relative;
   border-radius: 1rem;

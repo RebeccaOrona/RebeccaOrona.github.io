@@ -24,6 +24,8 @@ let panelFiltros = document.querySelector("#filtros")
 let comboFiltros = document.querySelector("#combos")
 let panelFiltrosActivos = document.querySelector("#filtrosActivos");
 let aIndex = document.querySelectorAll(".aIndex");
+const numerito = document.querySelector("#numerito");
+let botonCaptura = document.querySelectorAll(".carritoAgregarProducto");
 console.log(aIndex[0]);
 
 
@@ -76,16 +78,30 @@ comboIntensidad.addEventListener('change', (evt) => {
             renderIndex("Intenso");
             break;
     }
+    let res = evt.target.value
+    localStorage.setItem('Intensidad', res)
 })
 
+var arrayIntensidad = []
+function cargarArray() {
+        
+    productosJSON.forEach( (elemento) => {
+        if(elemento.tipo==localStorage.getItem('Intensidad')) {arrayIntensidad.push(elemento)}
+        else (console.log("No se logro encontrar ese tipo"))
+    }) 
+
+        console.log(arrayIntensidad)
+}
+setTimeout(() => cargarArray(),8000)
+let contenedorBotones = []
 
 const renderIndex = (tipoIntensidad) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
     //Declaro el array donde guardo los productos
-var arrayIntensidad = []
 
-    productosJSON.forEach(elemento => {{
+
+    productosJSON.forEach(elemento => {
         if(elemento.tipo==tipoIntensidad){
          //Solo imprimimos los elementos que coincidan con el tipo elegido del dropdown
             // Hay que colocar += para que se sume al contenido ya puesto antes, sino lo sobreescribe.  
@@ -109,31 +125,33 @@ var arrayIntensidad = []
             </p>
             <br>
            `
-
-           const boton = document.createElement("button");
-        boton.id='btnAgregar'
-        boton.innerText="Agregar al carrito"
-        content.append(boton)
-        contenedor.append(content)
+            const div = document.createElement("div")
+            div.className="btnAgregar" + elemento.id
+            const botonAgregar = document.createElement("button");
+            botonAgregar.id=elemento.id
+            botonAgregar.className="carritoAgregarProducto"
+            botonAgregar.innerText="Agregar al carrito"
             
+        div.append(botonAgregar)
+        content.append(div)
+        contenedor.append(content)
+        actualizarBotonesAgregar()
+        // contenedorBotones.push(boton)
+        localStorage.setItem(botonAgregar.id, botonAgregar.className)
+            // console.log(contenedorBotones)
+            // console.log(typeof(contenedorBotones[0]))
         
         
         
-        console.log(boton)
+        console.log(botonAgregar)
            console.log(contenedor.innerHTML)
-        }}
+    }
 
-    function cargarArray() {
-    productosJSON.forEach(elemento => {
-        if(elemento.tipo===tipoIntensidad){
-            arrayIntensidad.push((productosJSON[elemento]))}
-        
-        console.log(productosJSON)
-        console.log(arrayIntensidad)
-    }
-    )
-    }
-    setTimeout(() => cargarArray(),10000)
+    
+
+
+    
+    
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px"; 
         panelFiltros.style.top = "100px";
@@ -146,7 +164,7 @@ var arrayIntensidad = []
         contenedorPrincipal.style.height = "122px";
         contenedorPrincipal.style.background = "#e1cccc";
         comboFiltros.style.display = "none";
-    })
+})
     panelFiltrosActivos.innerHTML += ` <p> Tipo intensidad: ${tipoIntensidad}</p>`;
     panelFiltrosActivos.style.color = "rgb(168 62 149)";
     CambiarColorLink();
@@ -189,7 +207,7 @@ const renderIndexCategoria = (tipoCategoria) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
     listaProductosJSON.map(elemento => {
-        if (elemento.operacion == tipoCategoria) { //Solo imprimimos los elementos que coincidan con el tipo elegido del dropdown
+        if (elemento.categoria == tipoCategoria) { //Solo imprimimos los elementos que coincidan con el tipo elegido del dropdown
             // Hay que colocar += para que se sume al contenido ya puesto antes, sino lo sobreescribe.  
             console.log('entro al if');
             console.log(contenedorFiltros.style);
@@ -667,71 +685,61 @@ cboxCapsulas.addEventListener('click', (evt) => {
 
 // Carrito
 
-const capturarBoton = async() => {
 
-
-document.querySelector("#info")
-function captura(){
-    let botonCaptura = document.getElementById("btnAgregar")
-    return botonCaptura
-}
-
-var botonCarr = await(captura())
-console.log(botonCarr)
-
-
-botonCarr.addEventListener("click", () => {
-
-    let contenedorCarrito = document.querySelector("#carritoContainer")
-    console.log(contenedorCarrito)
-    console.log("Despues del query carritocontainer")
-    let contentCarrito = document.createElement("div")
-    contentCarrito.className = "prodAgregados"
-    arrayIntensidad.forEach(elemento => {
-    contentCarrito.innerHTML += `
+function actualizarBotonesAgregar(){
+    botonCaptura = document.querySelectorAll(".carritoAgregarProducto");  
     
-    <ul>
-    <img src= ${elemento.img} class="imgs"/>
-    <div class="info">
-    
-    <li>  ${elemento.tipo}</li>
-    <li>  ${elemento.detalles}</li>
-    <li>  ${elemento.precio}</li>
-    </div>
+    botonCaptura.forEach(boton => {
+        boton.addEventListener("click", agregarAlCarrito);
+    })
 
-    </ul>
     
     
     
-    `
-    localStorage.setItem("Producto",elemento)
     }
-    )
-    contenedorCarrito.append(contentCarrito)
+       
+    
+    
+
+    let productosEnCarrito;
+
+    let productosEnCarritoLS = localStorage.getItem("productos-en-carrito");
+    
+    if (productosEnCarritoLS) {
+        productosEnCarrito = JSON.parse(productosEnCarritoLS);
+        actualizarNumerito();
+    } else {
+        
+    }
+
+productosEnCarrito = [];
+
+
+function agregarAlCarrito(e) {
+
+    const idBoton = e.currentTarget.id;    
+    console.log(idBoton)
+    const productoAgregado = productosJSON.find(producto => producto.id == idBoton);
+    
+    console.log(e.target);
+    
+    if(productosEnCarrito.some(producto => producto.id == idBoton)) {
+        const index = productosEnCarrito.findIndex(producto => producto.id == idBoton);
+        productosEnCarrito[index].cantidad++;
+        console.log(productosEnCarrito)
+    } else {
+        productoAgregado.cantidad = 1;
+        productosEnCarrito.push(productoAgregado);
+        console.log(productosEnCarrito)
+    }
+    
+
+    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
 }
-)
+
+function actualizarNumerito() {
+    let nuevoNumerito = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
+    numerito.innerText = nuevoNumerito;
 }
-setTimeout(() => capturarBoton(),10000)
 
-// function respuestaClick() {
-//     let contenedorCarrito = document.querySelector('#carritoContainer')
-//     console.log(contenedorCarrito)
-//     contenedorCarrito.innerHTML += `
-//     <div class="prodAgregados">
-//     <ul>
-//     <img src=${elemento.img} class="imgs"/>
-//     <div class="info">
     
-//     <li> ${elemento.tipo}</li>
-//     <li>  ${elemento.detalles}</li>
-//     <li>  ${elemento.precio}</li>
-//     </div>
-
-//     </ul>
-    
-//     </div>
-    
-//     `
-
-// }
-{/* <li> Tipo: ${elemento.tipo}</li> */}

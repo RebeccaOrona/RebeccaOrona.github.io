@@ -6,6 +6,10 @@ TO DO:
 
 4-Agregar los detalles de cada objeto X
 5-Arreglar el css de la busqueda filtrada X
-6-Fazer carrito (Fijarse en la pag del mono galactico)
+6-Fazer carrito (Fijarse en la pag del mono galactico) X
 7-Arreglar las imagenes de cada producto (sacarles una foto mas chiquita) X
 8-Agregar boton para sumar al carrito X
+9-Buscar la manera de cuando se busque un producto sin stock (capsulas Oster) muestre un solo mensaje diciendo que no esta disponible.
+10-Hacer un sweet alert para el realizar compra en el carrito que diga gracias por su compra.
+11-Hacer un alert al costado de la pantalla cuando se agregue un producto al carrito mostrando su nombre y diciendo que fue agregado.
+12-Arreglar el icono para que aparesca en el carrito, nosotros y contacto.

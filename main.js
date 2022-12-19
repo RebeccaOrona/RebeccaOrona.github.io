@@ -38,15 +38,6 @@ function CambiarColorLink(){
 }
 
 
-// $(() => { //Esto se ejecuta una vez termina de cargar todo el DOM, es algo adicional, no necesario.
-    
-//         $.getJSON("data/propiedades.JSON", (respuesta) => { //Obtenemos los datos desde un JSON en forma estática. Es una petición asíncrona.
-//         // GUARDAMOS LA RESPUESTA EN UNA VARIABLE DENTRO DE LISTATAREASJSON.
-//         listaProductosJSON = respuesta;
-//         console.log(listaProductosJSON);
-
-//     })
-// })
 
 function DesCheckPres(){
     cboxMolido.checked = false;
@@ -82,23 +73,23 @@ comboIntensidad.addEventListener('change', (evt) => {
     localStorage.setItem('Intensidad', res)
 })
 
-var arrayIntensidad = []
-function cargarArray() {
+// var arrayIntensidad = []
+// function cargarArray() {
         
-    productosJSON.forEach( (elemento) => {
-        if(elemento.tipo==localStorage.getItem('Intensidad')) {arrayIntensidad.push(elemento)}
-        else (console.log("No se logro encontrar ese tipo"))
-    }) 
+//     productosJSON.forEach( (elemento) => {
+//         if(elemento.tipo==localStorage.getItem('Intensidad')) {arrayIntensidad.push(elemento)}
+//         else (console.log("No se logro encontrar ese tipo"))
+//     }) 
 
-        console.log(arrayIntensidad)
-}
-setTimeout(() => cargarArray(),8000)
-let contenedorBotones = []
+//         console.log(arrayIntensidad)
+// }
+// setTimeout(() => cargarArray(),8000)
+// let contenedorBotones = []
 
 const renderIndex = (tipoIntensidad) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    //Declaro el array donde guardo los productos
+    
 
 
     productosJSON.forEach(elemento => {
@@ -108,8 +99,8 @@ const renderIndex = (tipoIntensidad) => {
           //  contenedorFiltros.style.display = "none";
             contenedorFiltros.style.display = "";
             console.log(contenedor.innerHTML);
-            let content = document.createElement("div")
-            content.className = "contFiltradas"
+            let content = document.createElement("div");
+            content.className = "contFiltradas";
             content.innerHTML += ` 
             <p>
             <ul>
@@ -125,29 +116,24 @@ const renderIndex = (tipoIntensidad) => {
             </p>
             <br>
            `
-            const div = document.createElement("div")
-            div.className="btnAgregar" + elemento.id
+            const div = document.createElement("div");
+            div.className="btnAgregar" + elemento.id;
             const botonAgregar = document.createElement("button");
-            botonAgregar.id=elemento.id
-            botonAgregar.className="carritoAgregarProducto"
-            botonAgregar.innerText="Agregar al carrito"
+            botonAgregar.id=elemento.id;
+            botonAgregar.className="carritoAgregarProducto";
+            botonAgregar.innerText="Agregar al carrito";
             
-        div.append(botonAgregar)
-        content.append(div)
-        contenedor.append(content)
-        actualizarBotonesAgregar()
-        // contenedorBotones.push(boton)
-        localStorage.setItem(botonAgregar.id, botonAgregar.className)
-            // console.log(contenedorBotones)
-            // console.log(typeof(contenedorBotones[0]))
+        div.append(botonAgregar);
+        content.append(div);
+        contenedor.append(content);
         
         
+        localStorage.setItem(botonAgregar.id, botonAgregar.className);
         
-        console.log(botonAgregar)
-           console.log(contenedor.innerHTML)
+        console.log(contenedor.innerHTML);
     }
 
-    
+    actualizarBotonesAgregar();
 
 
     
@@ -182,13 +168,13 @@ comboCategoria.addEventListener('change', (evt) => {
     console.log(evt.target.value);
     switch (evt.target.value) { //Captamos el texto de la opción elegida con evento.target.value
         case "Nespresso":
-            renderIndexCategoria("Nespresso");
+            renderIndexCategoria("Capsulas compatibles con NESPRESSO");
             break;
         case "Oster":
             renderIndexCategoria("Oster");
             break;
         case "DolceGusto":
-            renderIndexCategoria("DolceGusto");
+            renderIndexCategoria("Capsulas compatibles con DOLCE GUSTO");
             break
         case "Molido":
             renderIndexCategoria("Molido");
@@ -206,31 +192,52 @@ comboCategoria.addEventListener('change', (evt) => {
 const renderIndexCategoria = (tipoCategoria) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    if(tipoCategoria=="Oster" || tipoCategoria=="Grano"){
+        console.log(tipoCategoria)
+        contenedor.innerHTML = `
+            <h2> Lo sentimos, las capsulas compatibles con cafetera Oster y los cafes en grano no están disponibles. <i class="bi bi-emoji-frown"></i></h2>
+         `
+    }
+    productosJSON.forEach(elemento => {
         if (elemento.categoria == tipoCategoria) { //Solo imprimimos los elementos que coincidan con el tipo elegido del dropdown
             // Hay que colocar += para que se sume al contenido ya puesto antes, sino lo sobreescribe.  
             console.log('entro al if');
             console.log(contenedorFiltros.style);
-            console.log(contenedorFiltros.style);
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += `  
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
+
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -274,27 +281,47 @@ comboPres.addEventListener('change', (evt) => {
 const renderIndexPres = (tipoPres) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    if(tipoPres=="Grano"){
+        console.log(tipoPres)
+        contenedor.innerHTML = `
+            <h2> Lo sentimos, los cafes en granos no están disponibles. <i class="bi bi-emoji-frown"></i></h2>
+         `
+    }
+    productosJSON.forEach(elemento => {
         if (elemento.presentacion == tipoPres) {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -338,27 +365,41 @@ bAplicar.addEventListener('click', (evt) => {
 const renderIndexPrecio = (Desde, Hasta) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    productosJSON.forEach(elemento => {
         if (elemento.precio >= Desde && elemento.precio <= Hasta) {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -385,27 +426,41 @@ let cboxMedio = document.querySelector('#cboxMedio');
 cboxMedio.addEventListener('click', (evt) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    productosJSON.forEach(elemento => {
         if (elemento.tipo == 'Medio') {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -438,24 +493,38 @@ cboxSuave.addEventListener('click', (evt) => {
     listaProductosJSON.map(elemento => {
         if (elemento.tipo == 'Suave') {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -485,27 +554,41 @@ let cboxIntenso = document.querySelector('#cboxIntenso');
 cboxIntenso.addEventListener('click', (evt) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    productosJSON.forEach(elemento => {
         if (elemento.tipo == 'Intenso') {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -536,27 +619,41 @@ let cboxMolido = document.querySelector('#cboxMolido');
 cboxMolido.addEventListener('click', (evt) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    productosJSON.forEach(elemento => {
         if (elemento.presentacion == 'Molido') {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
             </div>
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -584,29 +681,41 @@ let cboxGrano = document.querySelector('#cboxGrano');
 cboxGrano.addEventListener('click', (evt) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    productosJSON.forEach(elemento => {
         if (elemento.presentacion == 'Grano') {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
-            <button id="btnAgregar">Agregar al carrito</button>
-            
-
             </div>
             </ul>
             </p>
-            </div>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
     
         panelFiltros.style.border = "5px solid #aa76a1";
@@ -638,28 +747,41 @@ let cboxCapsulas = document.querySelector('#cboxCapsulas');
 cboxCapsulas.addEventListener('click', (evt) => {
     document.querySelector("#displayIndex").innerText = ``
     let contenedor = document.querySelector("#displayIndex");
-    listaProductosJSON.map(elemento => {
+    productosJSON.forEach(elemento => {
         if (elemento.presentacion == 'Capsulas') {
             contenedorFiltros.style.display = "";
-            contenedor.innerHTML += ` 
-            <div class= "contFiltradas">
+            let content = document.createElement("div")
+            content.className = "contFiltradas"
+            content.innerHTML += ` 
             <p>
             <ul>
             <li> Foto: </li> 
             <img src=${elemento.img} class="imgs"/>
-            <div class="info">
+            <div class="info${elemento.id}">
             <li> Tipo: ${elemento.tipo}</li>
             <li> Presentacion: ${elemento.presentacion}</li>
             <li> Categoria: ${elemento.categoria}</li>
             <li> Precio: ${elemento.precio}</li>
             </div>
-            <button class="btnAgregar">Agregar al carrito</button>
-            </ul></p>
-
-            
-            </div>
+            </ul>
+            </p>
             <br>
            `
+           const div = document.createElement("div")
+           div.className="btnAgregar" + elemento.id
+           const botonAgregar = document.createElement("button");
+           botonAgregar.id=elemento.id
+           botonAgregar.className="carritoAgregarProducto"
+           botonAgregar.innerText="Agregar al carrito"
+           
+            div.append(botonAgregar)
+            content.append(div)
+            contenedor.append(content)
+            actualizarBotonesAgregar()
+       
+            localStorage.setItem(botonAgregar.id, botonAgregar.className)
+       
+            console.log(contenedor.innerHTML)
         }
         panelFiltros.style.border = "5px solid #aa76a1";
         panelFiltros.style.margin = "20px";
@@ -704,6 +826,7 @@ function actualizarBotonesAgregar(){
     let productosEnCarrito;
 
     let productosEnCarritoLS = localStorage.getItem("productos-en-carrito");
+
     
     if (productosEnCarritoLS) {
         productosEnCarrito = JSON.parse(productosEnCarritoLS);
@@ -732,7 +855,7 @@ function agregarAlCarrito(e) {
         productosEnCarrito.push(productoAgregado);
         console.log(productosEnCarrito)
     }
-    
+    actualizarNumerito();
 
     localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
 }

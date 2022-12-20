@@ -1,4 +1,5 @@
 
+
 //declaro el array de objetos que contendra los productos guardados
 let productosJSON = []
 fetch("data/productos.JSON")
@@ -832,10 +833,10 @@ function actualizarBotonesAgregar(){
         productosEnCarrito = JSON.parse(productosEnCarritoLS);
         actualizarNumerito();
     } else {
-        
+        productosEnCarrito = [];
     }
 
-productosEnCarrito = [];
+
 
 
 function agregarAlCarrito(e) {
@@ -850,9 +851,44 @@ function agregarAlCarrito(e) {
         const index = productosEnCarrito.findIndex(producto => producto.id == idBoton);
         productosEnCarrito[index].cantidad++;
         console.log(productosEnCarrito)
-    } else {
+        Toastify({
+            text: "El producto " + productosEnCarrito[index].detalles + " fue agregado al carrito.",
+            duration: 3000,
+            position: "right",
+            offset: {
+                y: 70
+            },
+            newWindow: true,
+            close: true,
+            style: {
+                background: "#aa76a1",
+                color: "black"  
+            }
+
+        }).showToast();
+    } else /*if(!(productosEnCarrito.some(producto => producto.id == idBoton)))*/{
+        //ARREGLAR ESTO, NO ENCUENTRA EL ID
+        const index = productosEnCarrito.findIndex(producto => producto.id == idBoton);
+        console.log(index)
+        Toastify({
+            text: "El producto fue agregado al carrito.",
+            duration: 3000,
+            position: "right",
+            gravity:"top",
+            offset: {
+                y: 70
+            },
+            newWindow: true,
+            close: true,
+            style: {
+                background: "#aa76a1",
+                color: "black"
+            }
+
+        }).showToast();
         productoAgregado.cantidad = 1;
         productosEnCarrito.push(productoAgregado);
+        
         console.log(productosEnCarrito)
     }
     actualizarNumerito();
